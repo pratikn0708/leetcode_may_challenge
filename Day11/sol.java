@@ -1,15 +1,16 @@
 class Solution {
-    public int singleNonDuplicate(int[] nums) {
-        int nonRepitionNo=-1;
-        if(nums.length==1){
-            nonRepitionNo=nums[0];
+     public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
+        int color = image[sr][sc];
+        if (color != newColor) dfs(image, sr, sc, color, newColor);
+        return image;
+    }
+    public void dfs(int[][] image, int r, int c, int color, int newColor) {
+        if (image[r][c] == color) {
+            image[r][c] = newColor;
+            if (r >= 1) dfs(image, r-1, c, color, newColor);
+            if (c >= 1) dfs(image, r, c-1, color, newColor);
+            if (r+1 < image.length) dfs(image, r+1, c, color, newColor);
+            if (c+1 < image[0].length) dfs(image, r, c+1, color, newColor);
         }
-        for(int i=0;i<nums.length-2;i+=2){
-            if(nums[i]!=nums[i+1]){
-                nonRepitionNo=nums[i];
-                break;
-            }
-        }
-        return nonRepitionNo==-1?nums[nums.length-1]:nonRepitionNo;
     }
 }
